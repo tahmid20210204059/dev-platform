@@ -40,6 +40,10 @@ const router = express.Router();
  *     responses:
  *       201:
  *         description: Profile created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiSuccess'
  */
 router.post(
   "/profile",
@@ -77,6 +81,10 @@ router.post(
  *     responses:
  *       200:
  *         description: Profile updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiSuccess'
  */
 router.put(
   "/profile",
@@ -101,6 +109,10 @@ router.put(
  *     responses:
  *       200:
  *         description: Profile fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiSuccess'
  */
 router.get(
   "/profile/:userId",

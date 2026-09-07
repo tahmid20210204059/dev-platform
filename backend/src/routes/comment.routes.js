@@ -20,6 +20,10 @@ const router = express.Router();
  *     responses:
  *       200:
  *         description: Comments fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiSuccess'
  */
 router.get(
   "/posts/:id/comments",
@@ -57,6 +61,10 @@ router.get(
  *     responses:
  *       201:
  *         description: Comment created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiSuccess'
  */
 router.post(
   "/posts/:id/comments",
@@ -95,6 +103,10 @@ router.post(
  *     responses:
  *       201:
  *         description: Reply created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiSuccess'
  */
 router.post(
   "/comments/:id/replies",

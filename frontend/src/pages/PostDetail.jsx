@@ -6,6 +6,10 @@ import {
     createComment,
     replyComment
 } from "../api/comment.api";
+import {
+    getCommentReactionCounts,
+    toggleCommentReaction
+} from "../api/reaction.api";
 import { API_BASE_URL } from "../api/axios";
 import { formatTimeAgo } from "../utils/time";
 
@@ -17,6 +21,53 @@ const CommentItem = ({ comment, onReplyCreated }) => {
     const [replyOpen, setReplyOpen] = useState(false);
     const [replySubmitting, setReplySubmitting] = useState(false);
     const [replyError, setReplyError] = useState("");
+    const [reactionCounts, setReactionCounts] = useState({
+        likes: 0,
+        dislikes: 0
+    });
+    const [reactionError, setReactionError] = useState("");
+
+    useEffect(() => {
+        let active = true;
+
+        getCommentReactionCounts(comment.id)
+            .then(response => {
+                if (active) {
+                    setReactionCounts(response.data);
+                }
+            })
+            .catch(error => {
+                if (active) {
+                    setReactionError(
+                        error.response?.data?.message ||
+                        "Unable to load comment reactions."
+                    );
+                }
+            });
+
+        return () => {
+            active = false;
+        };
+    }, [comment.id]);
+
+    const handleReaction = async type => {
+        setReactionError("");
+
+        try {
+            await toggleCommentReaction({
+                commentId: comment.id,
+                type
+            });
+
+            const response = await getCommentReactionCounts(comment.id);
+            setReactionCounts(response.data);
+        } catch (error) {
+            setReactionError(
+                error.response?.data?.message ||
+                "Unable to update comment reaction."
+            );
+        }
+    };
 
     const handleReply = async event => {
         event.preventDefault();
@@ -51,6 +102,22 @@ const CommentItem = ({ comment, onReplyCreated }) => {
             <time dateTime={comment.created_at}>
                 {formatTimeAgo(comment.created_at)}
             </time>
+
+            <div>
+                <button
+                    type="button"
+                    onClick={() => handleReaction("like")}
+                >
+                    Like {reactionCounts.likes}
+                </button>
+                <button
+                    type="button"
+                    onClick={() => handleReaction("dislike")}
+                >
+                    Dislike {reactionCounts.dislikes}
+                </button>
+                {reactionError && <span role="alert">{reactionError}</span>}
+            </div>
 
             <button
                 type="button"

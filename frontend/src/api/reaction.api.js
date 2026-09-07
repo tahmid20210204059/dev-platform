@@ -32,3 +32,35 @@ export const getReactionCounts = async (
   return response.data;
 
 };
+
+
+export const toggleCommentReaction = async ({
+  commentId,
+  type
+}) => {
+
+  const response = await api.post(
+    `/comments/${commentId}/reaction`,
+    {
+      type
+    }
+  );
+
+
+  return response.data;
+
+};
+
+
+export const getCommentReactionCounts = async (
+  commentId
+) => {
+
+  const response = await api.get(
+    `/reaction/${commentId}/counts?targetType=comment`
+  );
+
+
+  return response.data;
+
+};

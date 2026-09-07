@@ -37,6 +37,10 @@ const router = express.Router();
  *     responses:
  *       200:
  *         description: Reaction toggled successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiSuccess'
  */
 router.post(
   "/posts/:id/reaction",
@@ -82,6 +86,10 @@ router.post(
  *     responses:
  *       200:
  *         description: Reaction toggled successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiSuccess'
  */
 router.post(
   "/comments/:id/reaction",
@@ -119,6 +127,10 @@ router.post(
  *     responses:
  *       200:
  *         description: Reaction counts fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiSuccess'
  */
 router.get(
   "/reaction/:id/counts",
@@ -153,6 +165,10 @@ router.get(
  *     responses:
  *       200:
  *         description: User reaction fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiSuccess'
  */
 router.get(
   "/reaction/:id/user",

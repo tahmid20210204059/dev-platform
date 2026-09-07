@@ -15,6 +15,10 @@ const router = express.Router();
  *     responses:
  *       200:
  *         description: Posts fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiSuccess'
  */
 router.get("/", postController.getPosts);
 
@@ -35,6 +39,10 @@ router.get("/", postController.getPosts);
  *     responses:
  *       200:
  *         description: Post fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiSuccess'
  */
 router.get("/:id", postController.getPost);
 
@@ -71,6 +79,10 @@ router.get("/:id", postController.getPost);
  *     responses:
  *       201:
  *         description: Post created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiSuccess'
  *       400:
  *         description: Invalid media format
  *       401:

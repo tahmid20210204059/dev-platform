@@ -19,6 +19,47 @@ const options = {
     ],
 
     components: {
+      schemas: {
+        ApiSuccess: {
+          type: "object",
+          required: ["success", "data", "message"],
+          properties: {
+            success: {
+              type: "boolean",
+              example: true
+            },
+            data: {
+              nullable: true
+            },
+            message: {
+              type: "string",
+              example: "Request completed successfully"
+            }
+          }
+        },
+        ApiError: {
+          type: "object",
+          required: ["success", "statusCode", "message", "errors"],
+          properties: {
+            success: {
+              type: "boolean",
+              example: false
+            },
+            statusCode: {
+              type: "integer",
+              example: 400
+            },
+            message: {
+              type: "string",
+              example: "Validation failed"
+            },
+            errors: {
+              type: "array",
+              items: {}
+            }
+          }
+        }
+      },
       securitySchemes: {
         bearerAuth: {
           type: "http",
