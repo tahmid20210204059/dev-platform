@@ -1,26 +1,38 @@
 const postModel = require("../models/post.model");
 
-const createPost = async ({ authorId, title, body }) => {
+
+const createPost = async ({
+  authorId,
+  title,
+  body,
+  mediaUrl,
+  mediaType
+}) => {
+
   return await postModel.createPost({
     authorId,
     title,
-    body
+    body,
+    mediaUrl,
+    mediaType
   });
+
 };
+
 
 const getAllPosts = async () => {
+
   return await postModel.getAllPosts();
+
 };
+
 
 const getPostById = async (id) => {
-  const post = await postModel.getPostById(id);
 
-  if (!post) {
-    throw new Error("Post not found");
-  }
+  return await postModel.getPostById(id);
 
-  return post;
 };
+
 
 module.exports = {
   createPost,

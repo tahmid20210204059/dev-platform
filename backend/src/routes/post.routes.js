@@ -1,6 +1,7 @@
 const express = require("express");
 const postController = require("../controllers/post.controller");
 const authMiddleware = require("../middlewares/auth.middleware");
+const upload = require("../middlewares/upload.middleware");
 
 const router = express.Router();
 
@@ -42,7 +43,7 @@ router.get("/:id", postController.getPost);
  * @swagger
  * /posts:
  *   post:
- *     summary: Create a post
+ *     summary: Create a post with optional image/video
  *     tags:
  *       - Posts
  *     security:
@@ -50,7 +51,7 @@ router.get("/:id", postController.getPost);
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             required:
@@ -63,13 +64,24 @@ router.get("/:id", postController.getPost);
  *               body:
  *                 type: string
  *                 example: Building a community platform with Node.js
+ *               media:
+ *                 type: string
+ *                 format: binary
+ *                 description: Image or video file
  *     responses:
  *       201:
  *         description: Post created successfully
+ *       400:
+ *         description: Invalid media format
  *       401:
  *         description: Unauthorized
  */
-router.post("/", authMiddleware, postController.createPost);
+router.post(
+  "/",
+  authMiddleware,
+  upload.single("media"),
+  postController.createPost
+);
 
 
 module.exports = router;

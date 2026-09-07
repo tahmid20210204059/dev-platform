@@ -1,8 +1,22 @@
 const authService = require("../services/auth.service");
+const {
+  successResponse,
+  errorResponse
+} = require("../utils/apiResponse");
+
 
 const register = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const {
+      name,
+      email,
+      password
+    } = req.body || {};
+
+    if (!name || !email || !password) {
+      return errorResponse(res, 400, "Validation failed");
+    }
+
 
     const result = await authService.register({
       name,
@@ -10,40 +24,71 @@ const register = async (req, res) => {
       password
     });
 
-    res.status(201).json({
-      success: true,
-      data: result,
-      message: "User registered successfully"
-    });
+
+    return successResponse(
+      res,
+      201,
+      result,
+      "User registered successfully"
+    );
+
+
   } catch (error) {
-    res.status(400).json({
-      success: false,
-      message: error.message
-    });
+
+    return errorResponse(
+      res,
+      error.message === "Email already exists" ? 400 : 500,
+      error.message === "Email already exists"
+        ? error.message
+        : "Internal server error"
+    );
+
   }
 };
 
+
+
 const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+
+    const {
+      email,
+      password
+    } = req.body || {};
+
+    if (!email || !password) {
+      return errorResponse(res, 400, "Validation failed");
+    }
+
 
     const result = await authService.login({
       email,
       password
     });
 
-    res.status(200).json({
-      success: true,
-      data: result,
-      message: "Login successful"
-    });
+
+    return successResponse(
+      res,
+      200,
+      result,
+      "Login successful"
+    );
+
+
   } catch (error) {
-    res.status(401).json({
-      success: false,
-      message: error.message
-    });
+
+    return errorResponse(
+      res,
+      error.message === "Invalid email or password" ? 401 : 500,
+      error.message === "Invalid email or password"
+        ? error.message
+        : "Internal server error"
+    );
+
   }
 };
+
+
 
 module.exports = {
   register,

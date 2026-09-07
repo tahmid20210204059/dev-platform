@@ -1,53 +1,92 @@
 const commentService = require("../services/comment.service");
+const {
+  successResponse,
+  errorResponse
+} = require("../utils/apiResponse");
+
 
 const createComment = async (req, res) => {
   try {
-    const { body } = req.body;
 
-    const comment = await commentService.createComment({
-      postId: req.params.id,
-      authorId: req.user.id,
+    const {
       body
-    });
+    } = req.body || {};
 
-    res.status(201).json({
-      success: true,
-      data: comment,
-      message: "Comment created successfully"
-    });
+    if (!body) {
+      return errorResponse(res, 400, "Validation failed");
+    }
+
+
+    const comment =
+      await commentService.createComment({
+        postId: req.params.id,
+        authorId: req.user.id,
+        body
+      });
+
+
+    return successResponse(
+      res,
+      201,
+      comment,
+      "Comment created successfully"
+    );
+
 
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message
-    });
+
+    return errorResponse(
+      res,
+      500,
+      "Internal server error"
+    );
+
   }
 };
+
 
 
 const getComments = async (req, res) => {
   try {
-    const comments =
-      await commentService.getComments(req.params.id);
 
-    res.status(200).json({
-      success: true,
-      data: comments,
-      message: "Comments fetched successfully"
-    });
+    const comments =
+      await commentService.getComments(
+        req.params.id
+      );
+
+
+    return successResponse(
+      res,
+      200,
+      comments,
+      "Comments fetched successfully"
+    );
+
 
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message
-    });
+
+    return errorResponse(
+      res,
+      500,
+      "Internal server error"
+    );
+
   }
 };
 
 
+
 const replyComment = async (req, res) => {
   try {
-    const { body } = req.body;
+
+    const {
+      body
+    } = req.body || {};
+
+    if (!body) {
+      return errorResponse(res, 400, "Validation failed");
+    }
+
 
     const reply =
       await commentService.replyComment({
@@ -56,19 +95,26 @@ const replyComment = async (req, res) => {
         body
       });
 
-    res.status(201).json({
-      success: true,
-      data: reply,
-      message: "Reply created successfully"
-    });
+
+    return successResponse(
+      res,
+      201,
+      reply,
+      "Reply created successfully"
+    );
+
 
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message
-    });
+
+    return errorResponse(
+      res,
+      500,
+      "Internal server error"
+    );
+
   }
 };
+
 
 
 module.exports = {
