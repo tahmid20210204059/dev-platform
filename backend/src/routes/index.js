@@ -1,7 +1,8 @@
 const express = require("express");
 const pool = require("../config/db");
 const authRoutes = require("./auth.routes");
-
+const postRoutes = require("./post.routes");
+const commentRoutes = require("./comment.routes");
 const router = express.Router();
 
 router.get("/health", (req, res) => {
@@ -32,5 +33,7 @@ router.get("/db-test", async (req, res) => {
 });
 
 router.use("/auth", authRoutes);
+router.use("/posts", postRoutes);
+router.use("/", commentRoutes);
 
 module.exports = router;
