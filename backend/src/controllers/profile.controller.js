@@ -43,8 +43,10 @@ const createProfile = async (req, res) => {
 
     return errorResponse(
       res,
-      500,
-      "Internal server error"
+      error.message === "Profile not found" ? 404 : 500,
+      error.message === "Profile not found"
+        ? error.message
+        : "Internal server error"
     );
 
   }

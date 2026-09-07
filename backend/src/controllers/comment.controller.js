@@ -37,8 +37,10 @@ const createComment = async (req, res) => {
 
     return errorResponse(
       res,
-      500,
-      "Internal server error"
+      error.code === "23503" ? 404 : 500,
+      error.code === "23503"
+        ? "Post not found"
+        : "Internal server error"
     );
 
   }
@@ -67,8 +69,10 @@ const getComments = async (req, res) => {
 
     return errorResponse(
       res,
-      500,
-      "Internal server error"
+      error.message === "Comment not found" ? 404 : 500,
+      error.message === "Comment not found"
+        ? error.message
+        : "Internal server error"
     );
 
   }

@@ -1,0 +1,39 @@
+.home-page{
+
+  min-height:100vh;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+}
+
+
+.hero-card{
+
+  max-width:800px;
+
+  width:100%;
+
+  background:#111827;
+
+  padding:50px;
+
+  border-radius:24px;
+
+  text-align:center;
+
+}
+
+
+.stats{
+
+  display:flex;
+
+  justify-content:center;
+
+  gap:20px;
+
+}

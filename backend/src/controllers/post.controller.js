@@ -92,6 +92,14 @@ const getPost = async (req, res) => {
     const post =
       await postService.getPostById(req.params.id);
 
+    if (!post) {
+      return errorResponse(
+        res,
+        404,
+        "Post not found"
+      );
+    }
+
 
     return successResponse(
       res,

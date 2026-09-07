@@ -1,0 +1,19 @@
+*{
+  box-sizing:border-box;
+}
+
+
+body{
+
+  margin:0;
+
+  font-family:
+  Inter,
+  Arial,
+  sans-serif;
+
+  background:#0b1220;
+
+  color:white;
+
+}
