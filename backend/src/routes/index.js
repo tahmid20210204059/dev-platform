@@ -1,4 +1,5 @@
 const express = require("express");
+const pool = require("../config/db");
 
 const router = express.Router();
 
@@ -10,6 +11,23 @@ router.get("/health", (req, res) => {
     },
     message: "API is healthy"
   });
+});
+
+router.get("/db-test", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT NOW()");
+
+    res.json({
+      success: true,
+      data: result.rows[0],
+      message: "Database connected successfully"
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
 });
 
 module.exports = router;
