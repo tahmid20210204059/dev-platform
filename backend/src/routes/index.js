@@ -1,5 +1,6 @@
 const express = require("express");
 const pool = require("../config/db");
+const authRoutes = require("./auth.routes");
 
 const router = express.Router();
 
@@ -29,5 +30,7 @@ router.get("/db-test", async (req, res) => {
     });
   }
 });
+
+router.use("/auth", authRoutes);
 
 module.exports = router;
